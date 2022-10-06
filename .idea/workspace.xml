@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1b19b72-08a1-4a6e-93e6-52a178ae6679" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PDFCreationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PDFCreationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/DocumentInformationBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PDFCreationBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PDFCreationBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
