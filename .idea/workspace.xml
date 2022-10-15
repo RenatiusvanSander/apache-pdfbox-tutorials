@@ -5,8 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1b19b72-08a1-4a6e-93e6-52a178ae6679" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/DocumentInformationBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/ComplexInvoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/TableCreator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/WritingInvoice.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/WritingLinePDF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/WritingMultipleLinesPDF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/ContentLayoutData.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PageContentLayouter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PageLayoutUtilities.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/img/lifehotout.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/PdfACreation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/PdfACreation.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PDFCreationBuilder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/pdfcreationservice/PDFCreationBuilder.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -35,21 +44,28 @@
     <option name="showMembers" value="true" />
     <option name="showVisibilityIcons" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.project.maven.repository.indices&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/rmeier/IdeaProjects/apache-pdfbox-tutorials/src/main/resources/img",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="edu.remad.apachepdfboxtutorials.pdfcreationservice" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/img" />
+    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="edu.remad.apachepdfboxtutorials" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.SettingDocumentInformation">
-    <configuration name="SavePDF" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.SavePDF" />
+  <component name="RunManager" selected="Application.ComplexInvoice">
+    <configuration name="ComplexInvoice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.ComplexInvoice" />
       <module name="apache-pdfbox-tutorials" />
       <extension name="coverage">
         <pattern>
@@ -61,8 +77,47 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="SettingDocumentInformation" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.SettingDocumentInformation" />
+    <configuration name="TableCreator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.TableCreator" />
+      <module name="apache-pdfbox-tutorials" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.remad.apachepdfboxtutorials.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WritingInvoice" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.WritingInvoice" />
+      <module name="apache-pdfbox-tutorials" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.remad.apachepdfboxtutorials.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WritingLinePDF" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.WritingLinePDF" />
+      <module name="apache-pdfbox-tutorials" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="edu.remad.apachepdfboxtutorials.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="WritingMultipleLinesPDF" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="edu.remad.apachepdfboxtutorials.WritingMultipleLinesPDF" />
       <module name="apache-pdfbox-tutorials" />
       <extension name="coverage">
         <pattern>
@@ -76,8 +131,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.SettingDocumentInformation" />
-        <item itemvalue="Application.SavePDF" />
+        <item itemvalue="Application.ComplexInvoice" />
+        <item itemvalue="Application.TableCreator" />
+        <item itemvalue="Application.WritingInvoice" />
+        <item itemvalue="Application.WritingMultipleLinesPDF" />
+        <item itemvalue="Application.WritingLinePDF" />
       </list>
     </recent_temporary>
   </component>
@@ -91,5 +149,16 @@
       <updated>1664397886891</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/edu/remad/apachepdfboxtutorials/WritingInvoice.java</url>
+          <line>52</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

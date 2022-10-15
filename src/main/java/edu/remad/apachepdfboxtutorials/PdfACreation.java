@@ -1,7 +1,5 @@
 package edu.remad.apachepdfboxtutorials;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import org.apache.jempbox.xmp.pdfa.XMPSchemaPDFAId;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -10,7 +8,6 @@ import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDMetadata;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
-import org.apache.pdfbox.pdmodel.font.PDTrueTypeFont;
 import org.apache.jempbox.xmp.XMPMetadata;
 import org.apache.pdfbox.pdmodel.font.PDType0Font;
 import org.apache.pdfbox.pdmodel.graphics.color.PDOutputIntent;

@@ -1,5 +1,6 @@
 package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -90,11 +91,21 @@ public class PDFCreationBuilder {
    *
    * @return built PDF document
    */
-  public PDDocument build() {
+  public PDDocument build() throws IOException {
     if (!this.pdfPages.isEmpty()) {
       for (PDPage page : this.pdfPages) {
         this.pdfDocument.addPage(page);
       }
+    }
+
+    if (this.pdfPages.size() == 1) { // refactor, move to PDFCreationService
+      ContentLayoutData contentLayoutData = new ContentLayoutData();
+      contentLayoutData.setFullName("Max", "Mustermann");
+      contentLayoutData.setStreetHouseNumber("Musterstraße", "48d");
+      contentLayoutData.setLocationZipCode("85354", "Musterstadt");
+
+      PageContentLayouter contentLayouter = new PageContentLayouter(pdfDocument, pdfPages.get(0),
+          contentLayoutData);
     }
 
     this.pdfDocument.setDocumentInformation(this.documentInformation);
