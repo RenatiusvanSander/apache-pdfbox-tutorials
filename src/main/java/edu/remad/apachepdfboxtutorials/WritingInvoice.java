@@ -38,7 +38,7 @@ public class WritingInvoice {
     pdfDocument.addPage(page);
 
     ContentLayoutData contentLayoutData = new ContentLayoutData();
-    contentLayoutData.setFullName("Max", "Mustermann");
+    contentLayoutData.setCustomerName("Max", "Mustermann");
     contentLayoutData.setStreetHouseNumber("Musterstraße", "48d");
     contentLayoutData.setLocationZipCode("85354", "Musterstadt");
 
@@ -51,7 +51,7 @@ public class WritingInvoice {
     contentStream.setFont(PDType1Font.HELVETICA, fontSize);
     float upperLeftHeight = page.getMediaBox().getLowerLeftY();
     contentStream.newLineAtOffset(OFFSET_LEFT, upperLeftHeight + OFFSET_HEADER);
-    contentStream.showText(contentLayoutData.getFullName());
+    contentStream.showText(contentLayoutData.getCustomerName());
     contentStream.newLineAtOffset(0, -fontSize);
     contentStream.showText(contentLayoutData.getStreetHouseNumber());
     contentStream.newLineAtOffset(0, -fontSize);

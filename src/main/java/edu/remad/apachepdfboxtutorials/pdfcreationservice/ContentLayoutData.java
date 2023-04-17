@@ -1,5 +1,12 @@
 package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 
+import java.awt.Color;
+import java.io.File;
+import org.apache.pdfbox.pdmodel.font.PDFont;
+
+/**
+ * Layouts the content
+ */
 public class ContentLayoutData {
 
   /**
@@ -19,7 +26,7 @@ public class ContentLayoutData {
   /**
    * full customer's name
    */
-  private String fullName;
+  private String customerName;
 
   /**
    * customers street and house number
@@ -67,13 +74,33 @@ public class ContentLayoutData {
   private String tutoringAppointmentDateTime;
 
   /**
+   * logo file path
+   */
+  private File logo;
+
+  /**
+   * font color as {@link Color}
+   */
+  private Color fontColor;
+
+  /**
+   * Normal used font
+   */
+  private PDFont font;
+
+  /**
+   * font for italic styled texte
+   */
+  private PDFont italicFont;
+
+  /**
    * Sets full name
    *
    * @param firstName customer's first name
    * @param lastName  customer's last name
    */
-  public void setFullName(String firstName, String lastName) {
-    this.fullName = String.format("%s %s %s", NAME_PREFIX, firstName, lastName);
+  public void setCustomerName(String firstName, String lastName) {
+    this.customerName = String.format("%s %s %s", NAME_PREFIX, firstName, lastName);
   }
 
   /**
@@ -81,8 +108,8 @@ public class ContentLayoutData {
    *
    * @return the full name
    */
-  public String getFullName() {
-    return this.fullName;
+  public String getCustomerName() {
+    return this.customerName;
   }
 
   /**
@@ -252,5 +279,57 @@ public class ContentLayoutData {
         TUTORING_APPOINTMENT_PREFIX,
         date,
         time);
+  }
+
+  /**
+   * Gets logo.
+   *
+   * @return path to logo as {@link File}
+   */
+  public File getLogo() {
+    return logo;
+  }
+
+  /**
+   * Sets logo
+   *
+   * @param logo file path to the logo file
+   */
+  public void setLogo(File logo) {
+    this.logo = logo;
+  }
+
+  /**
+   * Gets font color.
+   *
+   * @return color of the font, {@link Color}
+   */
+  public Color getFontColor() {
+    return fontColor;
+  }
+
+  /**
+   * Sets font color
+   *
+   * @param fontColor the font color as instance of {@link Color}
+   */
+  public void setFontColor(Color fontColor) {
+    this.fontColor = fontColor;
+  }
+
+  public PDFont getFont() {
+    return font;
+  }
+
+  public void setFont(PDFont font) {
+    this.font = font;
+  }
+
+  public PDFont getItalicFont() {
+    return italicFont;
+  }
+
+  public void setItalicFont(PDFont italicFont) {
+    this.italicFont = italicFont;
   }
 }

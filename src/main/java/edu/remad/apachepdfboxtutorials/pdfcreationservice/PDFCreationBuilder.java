@@ -3,6 +3,7 @@ package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -54,7 +55,7 @@ public class PDFCreationBuilder {
    * @param pages PDF pages to add to document
    * @return PDF creation builder
    */
-  public PDFCreationBuilder addPages(ArrayList<PDPage> pages) {
+  public PDFCreationBuilder addPages(List<PDPage> pages) {
     this.pdfPages.addAll(pages);
 
     return this;
@@ -98,9 +99,9 @@ public class PDFCreationBuilder {
       }
     }
 
-    if (this.pdfPages.size() == 1) { // refactor, move to PDFCreationService
+    if (this.pdfPages.size() == 1) { // TODO refactor, move to PDFCreationService
       ContentLayoutData contentLayoutData = new ContentLayoutData();
-      contentLayoutData.setFullName("Max", "Mustermann");
+      contentLayoutData.setCustomerName("Max", "Mustermann");
       contentLayoutData.setStreetHouseNumber("Musterstraße", "48d");
       contentLayoutData.setLocationZipCode("85354", "Musterstadt");
 

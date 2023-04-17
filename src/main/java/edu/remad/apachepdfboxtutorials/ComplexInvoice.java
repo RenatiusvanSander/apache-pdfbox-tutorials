@@ -1,9 +1,13 @@
 package edu.remad.apachepdfboxtutorials;
 
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.ContentLayoutData;
 import java.awt.Color;
+import java.io.File;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Date;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -29,11 +33,20 @@ public class ComplexInvoice {
     PDPage firstPage = new PDPage(PDRectangle.A4);
     document.addPage(firstPage);
 
-    String name = "Remy Meier";
+    ContentLayoutData contentLayout = new ContentLayoutData();
+    contentLayout.setCustomerName("Remy", "Meier");
+    File logo = new File("src/main/resources/img/lifehotout.png");
+    contentLayout.setLogo(logo);
+    contentLayout.setFont(PDType1Font.HELVETICA);
+    contentLayout.setItalicFont(PDType1Font.HELVETICA_OBLIQUE);
+    contentLayout.setFontColor(Color.BLACK);
+    contentLayout.setStreetHouseNumber("Volksdorfer Grenzweg","40A");
+    contentLayout.setLocationZipCode("Hamburg","22359");
+
     String callNo = "+49 176 61 36";
 
-    Format d_format = new SimpleDateFormat("dd/MM/yyyy");
-    Format t_format = new SimpleDateFormat("HH:mm");
+    Format dayFormatter = new SimpleDateFormat("dd/MM/yyyy");
+    Format timeFormatter = new SimpleDateFormat("HH:mm");
 
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
     int pageHeight = (int) firstPage.getTrimBox().getHeight();
@@ -42,43 +55,47 @@ public class ComplexInvoice {
 
     MyTextClass myTextClass = new MyTextClass(document, contentStream);
 
-    PDFont font = PDType1Font.HELVETICA;
-    PDFont italicFont = PDType1Font.HELVETICA_OBLIQUE;
+    PDFont font = contentLayout.getFont();
+    PDFont italicFont = contentLayout.getItalicFont();
 
     PDImageXObject headImage = PDImageXObject.createFromFile(
-        "src/main/resources/img/lifehotout.png", document);
+        contentLayout.getLogo().getPath(), document);
     contentStream.drawImage(headImage, 0, pageHeight - 235, pageWidth, 239);
 
-    String[] contactDetails = new String[]{"848744848", "8837738383"};
+    String[] contactDetails = new String[]{"Remy Meier Freelance Nachhilfe", "Volksdorfer Grenzweg 40A","22359 Hamburg","remad@web.de","+49 176 61 36 22 53"};
     myTextClass.addMultiLineText(contactDetails, 18,
-        pageWidth - (int) font.getStringWidth("664737373") / 1000 * 15 - 10, pageHeight - 25, font,
-        15, Color.BLACK);
-    myTextClass.addSingleLineText("Indian Tadka", 25, pageHeight - 150, font, 40, Color.BLACK);
+        pageWidth - (int) (font.getStringWidth(Arrays.stream(contactDetails).
+            max(Comparator.comparingInt(String::length)).get())+ 2200) / 1000 * 15 - 10, pageHeight - 25, font,
+        15, contentLayout.getFontColor());
+    myTextClass.addSingleLineText("Indian Tadka", 25, pageHeight - 150, font, 40, contentLayout.getFontColor());
 
-    myTextClass.addSingleLineText("Customer Name: " + name, 25, pageHeight - 250, font, 16,
-        Color.BLACK);
-    myTextClass.addSingleLineText("Mo. No: " + callNo, 25, pageHeight - 274, font, 16, Color.BLACK);
+    myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, 16,
+        contentLayout.getFontColor());
+    myTextClass.addSingleLineText(contentLayout.getStreetHouseNumber(), 25, pageHeight - 274, font, 16,
+        contentLayout.getFontColor());
+    myTextClass.addSingleLineText(contentLayout.getLocationZipCode(), 25, pageHeight - 294, font, 16,
+        contentLayout.getFontColor());
 
     String invoiceNo = "Invoice# 2536";
     float textWidth = myTextClass.getTextWidth(invoiceNo, font, 16);
     myTextClass.addSingleLineText(invoiceNo, (int) (pageWidth - 25 - textWidth), pageHeight - 250,
-        font, 16, Color.BLACK);
+        font, 16, contentLayout.getFontColor());
 
-    float dateTextWidth = myTextClass.getTextWidth("Date: " + d_format.format(new Date()), font,
+    float dateTextWidth = myTextClass.getTextWidth("Date: " + dayFormatter.format(new Date()), font,
         16);
-    myTextClass.addSingleLineText("Date: " + d_format.format(new Date()),
-        (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, 16, Color.BLACK);
+    myTextClass.addSingleLineText("Date: " + dayFormatter.format(new Date()),
+        (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, 16, contentLayout.getFontColor());
 
-    String time = t_format.format(new Date());
+    String time = timeFormatter.format(new Date());
     float timeTextWidth = myTextClass.getTextWidth("Time: " + time, font, 16);
     myTextClass.addSingleLineText("Time: " + time, (int) (pageWidth - 25 - timeTextWidth),
-        pageHeight - 298, font, 16, Color.BLACK);
+        pageHeight - 298, font, 16, contentLayout.getFontColor());
 
     MyTableClass myTable = new MyTableClass(document, contentStream);
 
     int[] cellWidths = new int[]{70, 160, 120, 90, 100};
     myTable.setTable(cellWidths, 30, 25, pageHeight - 350);
-    myTable.setTableFont(font, 16, Color.BLACK);
+    myTable.setTableFont(font, 16, contentLayout.getFontColor());
 
     Color tableHeadColor = new Color(240, 93, 11);
     Color tableBodyColor = new Color(219, 218, 198);
@@ -152,7 +169,7 @@ public class ComplexInvoice {
     float authoSignWidth = myTextClass.getTextWidth(authoSign, italicFont, 16);
     int xpos = pageWidth - 250 + pageWidth - 25;
     myTextClass.addSingleLineText(authoSign, (int) (xpos - authoSignWidth) / 2, 125, italicFont, 16,
-        Color.BLACK);
+        contentLayout.getFontColor());
 
     String bottomLine = "Rain or shine, it's time to dine";
     float bottomLineWidth = myTextClass.getTextWidth(bottomLine, font, 20);

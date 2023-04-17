@@ -75,11 +75,12 @@ public class PageContentLayouter {
    *
    * @throws IOException
    */
+  // TO DO fully rework with complex invoice logic
   private void generateAddressHeader() throws IOException {
     this.contentStream.beginText();
     float upperLeftHeight = this.pdfPage.getMediaBox().getHeight();
     this.contentStream.newLineAtOffset(OFFSET_LEFT, upperLeftHeight - OFFSET_HEADER);
-    this.contentStream.showText(this.contentLayoutData.getFullName());
+    this.contentStream.showText(this.contentLayoutData.getCustomerName());
     this.contentStream.newLineAtOffset(ZERO_OFFSET, -FONT_SIZE);
     this.contentStream.showText(this.contentLayoutData.getStreetHouseNumber());
     this.contentStream.newLineAtOffset(ZERO_OFFSET, -FONT_SIZE);
