@@ -6,9 +6,11 @@ import java.io.File;
 import java.io.IOException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -42,12 +44,20 @@ public class ComplexInvoice {
     contentLayout.setFontColor(Color.BLACK);
     contentLayout.setStreetHouseNumber("Volksdorfer Grenzweg","40A");
     contentLayout.setLocationZipCode("Hamburg","22359");
-
-    String callNo = "+49 176 61 36";
-
-    Format dayFormatter = new SimpleDateFormat("dd/MM/yyyy");
-    Format timeFormatter = new SimpleDateFormat("HH:mm");
-
+    contentLayout.setContactCompany("Remy Meier Freelance Nachhilfe");
+    contentLayout.setContactName("Remy Meier");
+    contentLayout.setContactStreetHouseNo("Volksdorfer Grenzweg 40A");
+    contentLayout.setContactZipAndLocation("22359 Hamburg");
+    contentLayout.setContactMobile("+49 176 61 36 22 53");
+    contentLayout.setContactEmail("remad@web.de");
+    contentLayout.setInvoiceNo("2549");
+    contentLayout.setDayFormatter(new SimpleDateFormat("dd/MM/yyyy"));
+    contentLayout.setTimeFormatter(new SimpleDateFormat("HH:mm"));
+    contentLayout.setTableHeaderColor(new Color(240, 93, 11));
+    contentLayout.setTableBodyColor(new Color(219, 218, 198));
+    List<String> paymentMethods = List.of("Paypal","Überweisung","Bargeld","Ebay-Kleianzeigen.de Methoden");
+    contentLayout.setPaymentMethods(paymentMethods);
+    contentLayout.setTUtoringAppointmentDate("12.03.2023");
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
     int pageHeight = (int) firstPage.getTrimBox().getHeight();
 
@@ -62,12 +72,12 @@ public class ComplexInvoice {
         contentLayout.getLogo().getPath(), document);
     contentStream.drawImage(headImage, 0, pageHeight - 235, pageWidth, 239);
 
-    String[] contactDetails = new String[]{"Remy Meier Freelance Nachhilfe", "Volksdorfer Grenzweg 40A","22359 Hamburg","remad@web.de","+49 176 61 36 22 53"};
+    String[] contactDetails = new String[]{contentLayout.getContactCompany(), contentLayout.getContactName(), contentLayout.getContactStreetHouseNo(),contentLayout.getContactZipAndLocation(), contentLayout.getContactEmail(), contentLayout.getContactMobile()};
     myTextClass.addMultiLineText(contactDetails, 18,
         pageWidth - (int) (font.getStringWidth(Arrays.stream(contactDetails).
             max(Comparator.comparingInt(String::length)).get())+ 2200) / 1000 * 15 - 10, pageHeight - 25, font,
         15, contentLayout.getFontColor());
-    myTextClass.addSingleLineText("Indian Tadka", 25, pageHeight - 150, font, 40, contentLayout.getFontColor());
+    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 150, font, 40, contentLayout.getFontColor());
 
     myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, 16,
         contentLayout.getFontColor());
@@ -76,17 +86,16 @@ public class ComplexInvoice {
     myTextClass.addSingleLineText(contentLayout.getLocationZipCode(), 25, pageHeight - 294, font, 16,
         contentLayout.getFontColor());
 
-    String invoiceNo = "Invoice# 2536";
-    float textWidth = myTextClass.getTextWidth(invoiceNo, font, 16);
-    myTextClass.addSingleLineText(invoiceNo, (int) (pageWidth - 25 - textWidth), pageHeight - 250,
+    float textWidth = myTextClass.getTextWidth(contentLayout.getInvoiceNo(), font, 16);
+    myTextClass.addSingleLineText(contentLayout.getInvoiceNo(), (int) (pageWidth - 25 - textWidth), pageHeight - 250,
         font, 16, contentLayout.getFontColor());
 
-    float dateTextWidth = myTextClass.getTextWidth("Date: " + dayFormatter.format(new Date()), font,
+    float dateTextWidth = myTextClass.getTextWidth("Datum: " + contentLayout.getDateFormatter().format(new Date()), font,
         16);
-    myTextClass.addSingleLineText("Date: " + dayFormatter.format(new Date()),
+    myTextClass.addSingleLineText("Datum: " + contentLayout.getDateFormatter().format(new Date()),
         (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, 16, contentLayout.getFontColor());
 
-    String time = timeFormatter.format(new Date());
+    String time = contentLayout.getTimeFormatter().format(new Date());
     float timeTextWidth = myTextClass.getTextWidth("Time: " + time, font, 16);
     myTextClass.addSingleLineText("Time: " + time, (int) (pageWidth - 25 - timeTextWidth),
         pageHeight - 298, font, 16, contentLayout.getFontColor());
@@ -97,8 +106,8 @@ public class ComplexInvoice {
     myTable.setTable(cellWidths, 30, 25, pageHeight - 350);
     myTable.setTableFont(font, 16, contentLayout.getFontColor());
 
-    Color tableHeadColor = new Color(240, 93, 11);
-    Color tableBodyColor = new Color(219, 218, 198);
+    Color tableHeadColor = contentLayout.getTableHeaderColor();
+    Color tableBodyColor = contentLayout.getTableBodyColor();
 
     myTable.addCell("Si.No.", tableHeadColor);
     myTable.addCell("Items", tableHeadColor);
@@ -154,9 +163,7 @@ public class ComplexInvoice {
     myTable.addCell("", tableHeadColor);
     myTable.addCell("924", tableHeadColor);
 
-    String[] paymentMethods = new String[]{"Payment methods we accept:", "Cash, Paypal",
-        "Monetas, Dinerito"};
-    myTextClass.addMultiLineText(paymentMethods, 15, 25, 180, italicFont, 10,
+    myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 180, italicFont, 10,
         new Color(122, 122, 122));
 
     contentStream.setStrokingColor(Color.BLACK);

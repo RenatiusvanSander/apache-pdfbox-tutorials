@@ -2,6 +2,8 @@ package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 
 import java.awt.Color;
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.List;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
 /**
@@ -92,6 +94,24 @@ public class ContentLayoutData {
    * font for italic styled texte
    */
   private PDFont italicFont;
+
+  /**
+   * contact's street and house number
+   */
+  private String contactStreetHouseNo;
+
+  /**
+   * contact's Zip and location
+   */
+  private String contactZipAndLocation;
+  private SimpleDateFormat dateFormatter;
+
+  private SimpleDateFormat timeFormatter;
+  private Color tableHeaderColor;
+
+  private Color tableBodyColor;
+  private List<String> paymentMethods;
+  private String tutoringAppointmentDate;
 
   /**
    * Sets full name
@@ -331,5 +351,73 @@ public class ContentLayoutData {
 
   public void setItalicFont(PDFont italicFont) {
     this.italicFont = italicFont;
+  }
+
+  public String getContactStreetHouseNo() {
+    return contactStreetHouseNo;
+  }
+
+  public void setContactStreetHouseNo(String contactStreetHouseNo) {
+    this.contactStreetHouseNo = contactStreetHouseNo;
+  }
+
+  public String getContactZipAndLocation() {
+    return contactZipAndLocation;
+  }
+
+  public void setContactZipAndLocation(String contactZipAndLocation) {
+    this.contactZipAndLocation = contactZipAndLocation;
+  }
+
+  public void setDayFormatter(SimpleDateFormat simpleDateFormat) {
+    this.dateFormatter = simpleDateFormat;
+  }
+
+  public SimpleDateFormat getDateFormatter() {
+    return dateFormatter;
+  }
+
+  public void setDateFormatter(SimpleDateFormat dateFormatter) {
+    this.dateFormatter = dateFormatter;
+  }
+
+  public SimpleDateFormat getTimeFormatter() {
+    return timeFormatter;
+  }
+
+  public void setTimeFormatter(SimpleDateFormat simpleDateFormat) {
+    this.timeFormatter = simpleDateFormat;
+  }
+
+  public Color getTableHeaderColor() {
+    return tableHeaderColor;
+  }
+
+  public void setTableHeaderColor(Color color) {
+    this.tableHeaderColor = color;
+  }
+
+  public Color getTableBodyColor() {
+    return tableBodyColor;
+  }
+
+  public void setTableBodyColor(Color color) {
+    this.tableBodyColor = color;
+  }
+
+  public void setPaymentMethods(List<String> paymentMethods) {
+    this.paymentMethods = paymentMethods;
+  }
+
+  public List<String> getPaymentMethods() {
+    return paymentMethods;
+  }
+
+  public void setTUtoringAppointmentDate(String s) {
+    this.tutoringAppointmentDate = s;
+  }
+
+  public String getTutoringAppointmentDate() {
+    return tutoringAppointmentDate;
   }
 }
