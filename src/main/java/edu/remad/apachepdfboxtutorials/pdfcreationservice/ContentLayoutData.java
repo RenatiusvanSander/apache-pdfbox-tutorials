@@ -3,6 +3,7 @@ package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 import java.awt.Color;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
@@ -104,9 +105,9 @@ public class ContentLayoutData {
    * contact's Zip and location
    */
   private String contactZipAndLocation;
-  private SimpleDateFormat dateFormatter;
+  private DateTimeFormatter dateFormatter;
 
-  private SimpleDateFormat timeFormatter;
+  private DateTimeFormatter timeFormatter;
   private Color tableHeaderColor;
 
   private Color tableBodyColor;
@@ -275,8 +276,7 @@ public class ContentLayoutData {
    * @param invoiceCreationDate invoice creation date to set
    */
   public void setInvoiceCreationDate(String invoiceCreationDate) {
-    this.invoiceCreationDate = String.format("%s %s", INVOICE_CREATION_DATE_PREFIX,
-        invoiceCreationDate);
+    this.invoiceCreationDate = invoiceCreationDate;
   }
 
   /**
@@ -369,24 +369,24 @@ public class ContentLayoutData {
     this.contactZipAndLocation = contactZipAndLocation;
   }
 
-  public void setDayFormatter(SimpleDateFormat simpleDateFormat) {
+  public void setDayFormatter(DateTimeFormatter simpleDateFormat) {
     this.dateFormatter = simpleDateFormat;
   }
 
-  public SimpleDateFormat getDateFormatter() {
+  public DateTimeFormatter getDateFormatter() {
     return dateFormatter;
   }
 
-  public void setDateFormatter(SimpleDateFormat dateFormatter) {
+  public void setDateFormatter(DateTimeFormatter dateFormatter) {
     this.dateFormatter = dateFormatter;
   }
 
-  public SimpleDateFormat getTimeFormatter() {
+  public DateTimeFormatter getTimeFormatter() {
     return timeFormatter;
   }
 
-  public void setTimeFormatter(SimpleDateFormat simpleDateFormat) {
-    this.timeFormatter = simpleDateFormat;
+  public void setTimeFormatter(DateTimeFormatter timeFormatter) {
+    this.timeFormatter = timeFormatter;
   }
 
   public Color getTableHeaderColor() {

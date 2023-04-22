@@ -4,12 +4,10 @@ import edu.remad.apachepdfboxtutorials.pdfcreationservice.ContentLayoutData;
 import java.awt.Color;
 import java.io.File;
 import java.io.IOException;
-import java.text.Format;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -51,13 +49,14 @@ public class ComplexInvoice {
     contentLayout.setContactMobile("+49 176 61 36 22 53");
     contentLayout.setContactEmail("remad@web.de");
     contentLayout.setInvoiceNo("2549");
-    contentLayout.setDayFormatter(new SimpleDateFormat("dd/MM/yyyy"));
-    contentLayout.setTimeFormatter(new SimpleDateFormat("HH:mm"));
+    contentLayout.setDayFormatter(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+    contentLayout.setTimeFormatter(DateTimeFormatter.ofPattern("HH:mm"));
     contentLayout.setTableHeaderColor(new Color(240, 93, 11));
     contentLayout.setTableBodyColor(new Color(219, 218, 198));
     List<String> paymentMethods = List.of("Paypal","Überweisung","Bargeld","Ebay-Kleianzeigen.de Methoden");
     contentLayout.setPaymentMethods(paymentMethods);
-    contentLayout.setTUtoringAppointmentDate("12.03.2023");
+    contentLayout.setTUtoringAppointmentDate("12/03/2023");
+    contentLayout.setInvoiceCreationDate("23/03/2023");
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
     int pageHeight = (int) firstPage.getTrimBox().getHeight();
 
@@ -77,7 +76,7 @@ public class ComplexInvoice {
         pageWidth - (int) (font.getStringWidth(Arrays.stream(contactDetails).
             max(Comparator.comparingInt(String::length)).get())+ 2200) / 1000 * 15 - 10, pageHeight - 25, font,
         15, contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 150, font, 40, contentLayout.getFontColor());
+    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 150, font, 30, contentLayout.getFontColor());
 
     myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, 16,
         contentLayout.getFontColor());
@@ -90,14 +89,14 @@ public class ComplexInvoice {
     myTextClass.addSingleLineText(contentLayout.getInvoiceNo(), (int) (pageWidth - 25 - textWidth), pageHeight - 250,
         font, 16, contentLayout.getFontColor());
 
-    float dateTextWidth = myTextClass.getTextWidth("Datum: " + contentLayout.getDateFormatter().format(new Date()), font,
+    String date = LocalDate.parse(contentLayout.getInvoiceCreationDate(), contentLayout.getDateFormatter()).format(contentLayout.getDateFormatter());
+    float dateTextWidth = myTextClass.getTextWidth("Rechnungsdatum: " + date, font,
         16);
-    myTextClass.addSingleLineText("Datum: " + contentLayout.getDateFormatter().format(new Date()),
+    myTextClass.addSingleLineText("Rechnungsdatum: " + date,
         (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, 16, contentLayout.getFontColor());
-
-    String time = contentLayout.getTimeFormatter().format(new Date());
-    float timeTextWidth = myTextClass.getTextWidth("Time: " + time, font, 16);
-    myTextClass.addSingleLineText("Time: " + time, (int) (pageWidth - 25 - timeTextWidth),
+    String tutoringDate = LocalDate.parse(contentLayout.getTutoringAppointmentDate(), contentLayout.getDateFormatter()).format(contentLayout.getDateFormatter());
+    float tutoringDateWidth = myTextClass.getTextWidth("Leistungsdatum: " + tutoringDate, font, 16);
+    myTextClass.addSingleLineText("Leistungsdatum: " + tutoringDate, (int) (pageWidth - 25 - tutoringDateWidth),
         pageHeight - 298, font, 16, contentLayout.getFontColor());
 
     MyTableClass myTable = new MyTableClass(document, contentStream);
