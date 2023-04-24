@@ -2,6 +2,7 @@ package edu.remad.apachepdfboxtutorials;
 
 import edu.remad.apachepdfboxtutorials.pdfcreationservice.ContentLayoutData;
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -53,10 +54,21 @@ public class ComplexInvoice {
     contentLayout.setTimeFormatter(DateTimeFormatter.ofPattern("HH:mm"));
     contentLayout.setTableHeaderColor(new Color(240, 93, 11));
     contentLayout.setTableBodyColor(new Color(219, 218, 198));
-    List<String> paymentMethods = List.of("Paypal","Überweisung","Bargeld","Ebay-Kleianzeigen.de Methoden");
+    List<String> paymentMethods = List.of("Paypal","Überweisung","Bargeld","Ebay-Kleinanzeigen.de Methoden");
     contentLayout.setPaymentMethods(paymentMethods);
-    contentLayout.setTUtoringAppointmentDate("12/03/2023");
+    contentLayout.setTutoringAppointmentDate("12/03/2023");
     contentLayout.setInvoiceCreationDate("23/03/2023");
+    contentLayout.setCapitalFontSize(30F);
+    contentLayout.setTextFontSize(16F);
+    contentLayout.setPaymentMethodFontSize(10F);
+    contentLayout.setbottomLine("Lernen ist das halbe Leben");
+    contentLayout.setBottomLineFontSize(20);
+    contentLayout.setBottomLineFontColor(Color.DARK_GRAY);
+    contentLayout.setBottomLineWidth(20F);
+    contentLayout.setBottomRectColor(new Color(255, 91, 0));
+    contentLayout.setBottomRect(new Rectangle(0, 0, 0, 30));
+
+
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
     int pageHeight = (int) firstPage.getTrimBox().getHeight();
 
@@ -76,34 +88,34 @@ public class ComplexInvoice {
         pageWidth - (int) (font.getStringWidth(Arrays.stream(contactDetails).
             max(Comparator.comparingInt(String::length)).get())+ 2200) / 1000 * 15 - 10, pageHeight - 25, font,
         15, contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 150, font, 30, contentLayout.getFontColor());
+    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 150, font, contentLayout.getCapitalFontSize(), contentLayout.getFontColor());
 
-    myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, 16,
+    myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, contentLayout.getTextFontSize(),
         contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getStreetHouseNumber(), 25, pageHeight - 274, font, 16,
+    myTextClass.addSingleLineText(contentLayout.getStreetHouseNumber(), 25, pageHeight - 274, font, contentLayout.getTextFontSize(),
         contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getLocationZipCode(), 25, pageHeight - 294, font, 16,
+    myTextClass.addSingleLineText(contentLayout.getLocationZipCode(), 25, pageHeight - 294, font, contentLayout.getTextFontSize(),
         contentLayout.getFontColor());
 
-    float textWidth = myTextClass.getTextWidth(contentLayout.getInvoiceNo(), font, 16);
+    float textWidth = myTextClass.getTextWidth(contentLayout.getInvoiceNo(), font, contentLayout.getTextFontSize());
     myTextClass.addSingleLineText(contentLayout.getInvoiceNo(), (int) (pageWidth - 25 - textWidth), pageHeight - 250,
-        font, 16, contentLayout.getFontColor());
+        font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
 
     String date = LocalDate.parse(contentLayout.getInvoiceCreationDate(), contentLayout.getDateFormatter()).format(contentLayout.getDateFormatter());
     float dateTextWidth = myTextClass.getTextWidth("Rechnungsdatum: " + date, font,
-        16);
+        contentLayout.getTextFontSize());
     myTextClass.addSingleLineText("Rechnungsdatum: " + date,
-        (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, 16, contentLayout.getFontColor());
+        (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
     String tutoringDate = LocalDate.parse(contentLayout.getTutoringAppointmentDate(), contentLayout.getDateFormatter()).format(contentLayout.getDateFormatter());
-    float tutoringDateWidth = myTextClass.getTextWidth("Leistungsdatum: " + tutoringDate, font, 16);
+    float tutoringDateWidth = myTextClass.getTextWidth("Leistungsdatum: " + tutoringDate, font, contentLayout.getTextFontSize());
     myTextClass.addSingleLineText("Leistungsdatum: " + tutoringDate, (int) (pageWidth - 25 - tutoringDateWidth),
-        pageHeight - 298, font, 16, contentLayout.getFontColor());
+        pageHeight - 298, font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
 
     MyTableClass myTable = new MyTableClass(document, contentStream);
 
     int[] cellWidths = new int[]{70, 160, 120, 90, 100};
     myTable.setTable(cellWidths, 30, 25, pageHeight - 350);
-    myTable.setTableFont(font, 16, contentLayout.getFontColor());
+    myTable.setTableFont(font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
 
     Color tableHeadColor = contentLayout.getTableHeaderColor();
     Color tableBodyColor = contentLayout.getTableBodyColor();
@@ -162,7 +174,7 @@ public class ComplexInvoice {
     myTable.addCell("", tableHeadColor);
     myTable.addCell("924", tableHeadColor);
 
-    myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 180, italicFont, 10,
+    myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 180, italicFont, contentLayout.getPaymentMethodFontSize(),
         new Color(122, 122, 122));
 
     contentStream.setStrokingColor(Color.BLACK);
@@ -172,18 +184,17 @@ public class ComplexInvoice {
     contentStream.stroke();
 
     String authoSign = "Authorised Signatory";
-    float authoSignWidth = myTextClass.getTextWidth(authoSign, italicFont, 16);
+    float authoSignWidth = myTextClass.getTextWidth(authoSign, italicFont, contentLayout.getTextFontSize());
     int xpos = pageWidth - 250 + pageWidth - 25;
-    myTextClass.addSingleLineText(authoSign, (int) (xpos - authoSignWidth) / 2, 125, italicFont, 16,
+    myTextClass.addSingleLineText(authoSign, (int) (xpos - authoSignWidth) / 2, 125, italicFont, contentLayout.getTextFontSize(),
         contentLayout.getFontColor());
 
-    String bottomLine = "Rain or shine, it's time to dine";
-    float bottomLineWidth = myTextClass.getTextWidth(bottomLine, font, 20);
+    String bottomLine = contentLayout.getBottomLine();
+    float bottomLineWidth = myTextClass.getTextWidth(bottomLine, font, contentLayout.getBottomLineWidth());
     myTextClass.addSingleLineText(bottomLine, (int) (pageWidth - bottomLineWidth) / 2, 50,
-        italicFont, 20, Color.DARK_GRAY);
+        italicFont, contentLayout.getBottomLineFontSize(), contentLayout.getBottomLineFontColor());
 
-    Color bottomRectColor = new Color(255, 91, 0);
-    contentStream.setNonStrokingColor(bottomRectColor);
+    contentStream.setNonStrokingColor(contentLayout.getBottomRectColor());
     contentStream.addRect(0, 0, pageWidth, 30);
     contentStream.fill();
 

@@ -1,8 +1,8 @@
 package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 
 import java.awt.Color;
+import java.awt.Rectangle;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import org.apache.pdfbox.pdmodel.font.PDFont;
@@ -113,6 +113,15 @@ public class ContentLayoutData {
   private Color tableBodyColor;
   private List<String> paymentMethods;
   private String tutoringAppointmentDate;
+  private float capitalFontSize;
+  private float textFontSize;
+  private float paymentMethodFontSize;
+  private String bottomLine;
+  private int bottomLineFontSize;
+  private Color bottomLineFontColor;
+  private Color bottomRectColor;
+  private float bottomLineWidth;
+  private Rectangle bottomRect;
 
   /**
    * Sets full name
@@ -413,11 +422,83 @@ public class ContentLayoutData {
     return paymentMethods;
   }
 
-  public void setTUtoringAppointmentDate(String s) {
+  public void setTutoringAppointmentDate(String s) {
     this.tutoringAppointmentDate = s;
   }
 
   public String getTutoringAppointmentDate() {
     return tutoringAppointmentDate;
+  }
+
+  public void setCapitalFontSize(float capitalFontSize) {
+    this.capitalFontSize = capitalFontSize;
+  }
+
+  public float getCapitalFontSize() {
+    return capitalFontSize;
+  }
+
+  public void setTextFontSize(float textFontSize) {
+    this.textFontSize = textFontSize;
+  }
+
+  public float getTextFontSize() {
+    return textFontSize;
+  }
+
+  public void setPaymentMethodFontSize(float paymentMethodFontSize) {
+    this.paymentMethodFontSize = paymentMethodFontSize;
+  }
+
+  public float getPaymentMethodFontSize() {
+    return paymentMethodFontSize;
+  }
+
+  public void setbottomLine(String bottomLine) {
+    this.bottomLine = bottomLine;
+  }
+
+  public String getBottomLine() {
+    return bottomLine;
+  }
+
+  public void setBottomLineFontSize(int bottomLineFontSize) {
+    this.bottomLineFontSize = bottomLineFontSize;
+  }
+
+  public int getBottomLineFontSize() {
+    return bottomLineFontSize;
+  }
+
+  public void setBottomLineFontColor(Color bottomLineFontColor) {
+    this.bottomLineFontColor = bottomLineFontColor;
+  }
+
+  public Color getBottomLineFontColor() {
+    return bottomLineFontColor;
+  }
+
+  public void setBottomRectColor(Color bottomRectColor) {
+    this.bottomRectColor = bottomRectColor;
+  }
+
+  public Color getBottomRectColor() {
+    return bottomRectColor;
+  }
+
+  public void setBottomLineWidth(float bottomLineWidth) {
+    this.bottomLineWidth = bottomLineWidth;
+  }
+
+  public float getBottomLineWidth() {
+    return bottomLineWidth;
+  }
+
+  public void setBottomRect(Rectangle bottomRect) {
+    this.bottomRect=bottomRect;
+  }
+
+  public Rectangle getBottomRect() {
+    return bottomRect;
   }
 }
