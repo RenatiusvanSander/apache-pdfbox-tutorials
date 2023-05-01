@@ -128,6 +128,7 @@ public class ContentLayoutData {
   private int[] tableCellWidths;
   private int tableCellHeight;
   private List<String> tableHeaders = new ArrayList<>();
+  private Color paymentMethodColor;
 
   /**
    * Sets full name
@@ -546,5 +547,13 @@ public class ContentLayoutData {
 
   public List<String> getTableHeaders() {
     return tableHeaders;
+  }
+
+  public void setPaymentMethodColor(Color paymentMethodColor) {
+    this.paymentMethodColor = paymentMethodColor;
+  }
+
+  public Color getPaymentMethodColor() {
+    return paymentMethodColor;
   }
 }

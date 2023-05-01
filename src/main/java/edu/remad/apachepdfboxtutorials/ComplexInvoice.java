@@ -56,6 +56,7 @@ public class ComplexInvoice {
     contentLayout.setTableBodyColor(new Color(219, 218, 198));
     List<String> paymentMethods = List.of("Paypal","Überweisung","Bargeld","Ebay-Kleinanzeigen.de Methoden");
     contentLayout.setPaymentMethods(paymentMethods);
+    contentLayout.setPaymentMethodColor(new Color(122, 122, 122));
     contentLayout.setTutoringAppointmentDate("12/03/2023");
     contentLayout.setInvoiceCreationDate("23/03/2023");
     contentLayout.setCapitalFontSize(30F);
@@ -159,24 +160,24 @@ public class ComplexInvoice {
 
     myTable.addCell("", null);
     myTable.addCell("", null);
-    myTable.addCell("Sub Total", null);
+    myTable.addCell("Zwischen-Summe", null);
     myTable.addCell("", null);
     myTable.addCell("880", null);
 
     myTable.addCell("", null);
     myTable.addCell("", null);
-    myTable.addCell("GST", null);
-    myTable.addCell("5%", null);
-    myTable.addCell("44", null);
+    myTable.addCell("USt", null);
+    myTable.addCell("0%", null);
+    myTable.addCell("0", null);
 
     myTable.addCell("", null);
     myTable.addCell("", null);
-    myTable.addCell("Grand Total", tableHeadColor);
-    myTable.addCell("", tableHeadColor);
+    myTable.addCell("", null);
+    myTable.addCell("Summe", tableHeadColor);
     myTable.addCell("924", tableHeadColor);
 
     myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 180, italicFont, contentLayout.getPaymentMethodFontSize(),
-        new Color(122, 122, 122));
+        contentLayout.getPaymentMethodColor());
 
     contentStream.setStrokingColor(contentLayout.getAuthoSignColor());
     contentStream.setLineWidth(2);
