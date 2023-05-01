@@ -122,6 +122,10 @@ public class ContentLayoutData {
   private Color bottomRectColor;
   private float bottomLineWidth;
   private Rectangle bottomRect;
+  private String authoSign;
+  private Color authoSignColor;
+  private int[] tableCellWidths;
+  private int tableCellHeight;
 
   /**
    * Sets full name
@@ -500,5 +504,37 @@ public class ContentLayoutData {
 
   public Rectangle getBottomRect() {
     return bottomRect;
+  }
+
+  public void setAuthoSign(String authoSign) {
+    this.authoSign = authoSign;
+  }
+
+  public String getAuthoSign() {
+    return authoSign;
+  }
+
+  public void setAuthoSignColor(Color authoSignColor) {
+    this.authoSignColor = authoSignColor;
+  }
+
+  public Color getAuthoSignColor() {
+    return authoSignColor;
+  }
+
+  public void setTableCellWidths(int[] tableCellWidths) {
+    this.tableCellWidths = tableCellWidths;
+  }
+
+  public int[] getTableCellWidths() {
+    return tableCellWidths;
+  }
+
+  public void setTableCellHeight(int tableCellHeight) {
+    this.tableCellHeight = tableCellHeight;
+  }
+
+  public int getTableCellHeight() {
+    return tableCellHeight;
   }
 }

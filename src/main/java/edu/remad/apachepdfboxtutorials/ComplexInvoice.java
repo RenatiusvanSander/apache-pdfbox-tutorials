@@ -67,6 +67,10 @@ public class ComplexInvoice {
     contentLayout.setBottomLineWidth(20F);
     contentLayout.setBottomRectColor(new Color(255, 91, 0));
     contentLayout.setBottomRect(new Rectangle(0, 0, 0, 30));
+    contentLayout.setAuthoSign("Unterschrift");
+    contentLayout.setAuthoSignColor(Color.BLACK);
+    contentLayout.setTableCellWidths(new int[]{70, 160, 120, 90, 100});
+    contentLayout.setTableCellHeight(30);
 
 
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
@@ -111,15 +115,11 @@ public class ComplexInvoice {
     myTextClass.addSingleLineText("Leistungsdatum: " + tutoringDate, (int) (pageWidth - 25 - tutoringDateWidth),
         pageHeight - 298, font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
 
-    MyTableClass myTable = new MyTableClass(document, contentStream);
-
-    int[] cellWidths = new int[]{70, 160, 120, 90, 100};
-    myTable.setTable(cellWidths, 30, 25, pageHeight - 350);
-    myTable.setTableFont(font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
-
     Color tableHeadColor = contentLayout.getTableHeaderColor();
     Color tableBodyColor = contentLayout.getTableBodyColor();
-
+    MyTableClass myTable = new MyTableClass(document, contentStream);
+    myTable.setTable(contentLayout.getTableCellWidths(), contentLayout.getTableCellHeight(), 25, pageHeight - 350);
+    myTable.setTableFont(font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
     myTable.addCell("Si.No.", tableHeadColor);
     myTable.addCell("Items", tableHeadColor);
     myTable.addCell("Price", tableHeadColor);
@@ -177,13 +177,13 @@ public class ComplexInvoice {
     myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 180, italicFont, contentLayout.getPaymentMethodFontSize(),
         new Color(122, 122, 122));
 
-    contentStream.setStrokingColor(Color.BLACK);
+    contentStream.setStrokingColor(contentLayout.getAuthoSignColor());
     contentStream.setLineWidth(2);
     contentStream.moveTo(pageWidth - 250, 150);
     contentStream.lineTo(pageWidth - 25, 150);
     contentStream.stroke();
 
-    String authoSign = "Authorised Signatory";
+    String authoSign = contentLayout.getAuthoSign();
     float authoSignWidth = myTextClass.getTextWidth(authoSign, italicFont, contentLayout.getTextFontSize());
     int xpos = pageWidth - 250 + pageWidth - 25;
     myTextClass.addSingleLineText(authoSign, (int) (xpos - authoSignWidth) / 2, 125, italicFont, contentLayout.getTextFontSize(),
@@ -195,7 +195,7 @@ public class ComplexInvoice {
         italicFont, contentLayout.getBottomLineFontSize(), contentLayout.getBottomLineFontColor());
 
     contentStream.setNonStrokingColor(contentLayout.getBottomRectColor());
-    contentStream.addRect(0, 0, pageWidth, 30);
+    contentStream.addRect((float) contentLayout.getBottomRect().getX(), (float) contentLayout.getBottomRect().getY(), pageWidth, (float) contentLayout.getBottomRect().getHeight());
     contentStream.fill();
 
     contentStream.close();
