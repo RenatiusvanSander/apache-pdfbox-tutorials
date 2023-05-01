@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
@@ -126,6 +127,7 @@ public class ContentLayoutData {
   private Color authoSignColor;
   private int[] tableCellWidths;
   private int tableCellHeight;
+  private List<String> tableHeaders = new ArrayList<>();
 
   /**
    * Sets full name
@@ -536,5 +538,13 @@ public class ContentLayoutData {
 
   public int getTableCellHeight() {
     return tableCellHeight;
+  }
+
+  public void setTableHeaders(List<String> tableHeaders) {
+    this.tableHeaders = tableHeaders;
+  }
+
+  public List<String> getTableHeaders() {
+    return tableHeaders;
   }
 }

@@ -69,9 +69,10 @@ public class ComplexInvoice {
     contentLayout.setBottomRect(new Rectangle(0, 0, 0, 30));
     contentLayout.setAuthoSign("Unterschrift");
     contentLayout.setAuthoSignColor(Color.BLACK);
-    contentLayout.setTableCellWidths(new int[]{70, 160, 120, 90, 100});
+    contentLayout.setTableCellWidths(new int[]{80, 230, 70, 80, 80});
     contentLayout.setTableCellHeight(30);
-
+    List<String> tableHeaders = List.of("Position", "Beschreibung", "Preis", "Menge", "Gesamt");
+    contentLayout.setTableHeaders(tableHeaders);
 
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
     int pageHeight = (int) firstPage.getTrimBox().getHeight();
@@ -120,11 +121,11 @@ public class ComplexInvoice {
     MyTableClass myTable = new MyTableClass(document, contentStream);
     myTable.setTable(contentLayout.getTableCellWidths(), contentLayout.getTableCellHeight(), 25, pageHeight - 350);
     myTable.setTableFont(font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
-    myTable.addCell("Si.No.", tableHeadColor);
-    myTable.addCell("Items", tableHeadColor);
-    myTable.addCell("Price", tableHeadColor);
-    myTable.addCell("Qty", tableHeadColor);
-    myTable.addCell("Total", tableHeadColor);
+
+    // table header, own TableLayouter
+    for(String header : contentLayout.getTableHeaders()) {
+      myTable.addCell(header, tableHeadColor);
+    }
 
     myTable.addCell("1", tableBodyColor);
     myTable.addCell("Masala", tableBodyColor);
