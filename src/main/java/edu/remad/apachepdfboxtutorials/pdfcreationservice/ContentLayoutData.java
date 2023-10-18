@@ -6,6 +6,7 @@ import java.io.File;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
 /**
@@ -129,6 +130,8 @@ public class ContentLayoutData {
   private int tableCellHeight;
   private List<String> tableHeaders = new ArrayList<>();
   private Color paymentMethodColor;
+
+  private List<Map<String, String>> tableRows;
 
   /**
    * Sets full name
@@ -555,5 +558,13 @@ public class ContentLayoutData {
 
   public Color getPaymentMethodColor() {
     return paymentMethodColor;
+  }
+
+  public void setTableRows(List<Map<String, String>> tableRows) {
+    this.tableRows = tableRows;
+  }
+
+  public List<Map<String, String>> getTableRows() {
+    return tableRows;
   }
 }
