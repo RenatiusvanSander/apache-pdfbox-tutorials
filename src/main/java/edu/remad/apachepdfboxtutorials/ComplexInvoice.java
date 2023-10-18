@@ -7,9 +7,12 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -36,7 +39,7 @@ public class ComplexInvoice {
 
     ContentLayoutData contentLayout = new ContentLayoutData();
     contentLayout.setCustomerName("Remy", "Meier");
-    File logo = new File("src/main/resources/img/lifehotout.png");
+    File logo = new File("src/main/resources/img/logo.png");
     contentLayout.setLogo(logo);
     contentLayout.setFont(PDType1Font.HELVETICA);
     contentLayout.setItalicFont(PDType1Font.HELVETICA_OBLIQUE);
@@ -54,15 +57,15 @@ public class ComplexInvoice {
     contentLayout.setTimeFormatter(DateTimeFormatter.ofPattern("HH:mm"));
     contentLayout.setTableHeaderColor(new Color(240, 93, 11));
     contentLayout.setTableBodyColor(new Color(219, 218, 198));
-    List<String> paymentMethods = List.of("Paypal","Überweisung","Bargeld","Ebay-Kleinanzeigen.de Methoden");
+    List<String> paymentMethods = List.of("Paypal: remad@web.de","Überweisung: DE62 1203 0000 1071 0649 66 / BYLADEM1001","Bargeld","Kleinanzeigen.de-Methoden");
     contentLayout.setPaymentMethods(paymentMethods);
     contentLayout.setPaymentMethodColor(new Color(122, 122, 122));
     contentLayout.setTutoringAppointmentDate("12/03/2023");
     contentLayout.setInvoiceCreationDate("23/03/2023");
-    contentLayout.setCapitalFontSize(30F);
+    contentLayout.setCapitalFontSize(12F);
     contentLayout.setTextFontSize(16F);
     contentLayout.setPaymentMethodFontSize(10F);
-    contentLayout.setbottomLine("Lernen ist das halbe Leben");
+    contentLayout.setbottomLine("Lernen ist das halbe Leben!");
     contentLayout.setBottomLineFontSize(20);
     contentLayout.setBottomLineFontColor(Color.DARK_GRAY);
     contentLayout.setBottomLineWidth(20F);
@@ -74,6 +77,50 @@ public class ComplexInvoice {
     contentLayout.setTableCellHeight(30);
     List<String> tableHeaders = List.of("Position", "Beschreibung", "Preis", "Menge", "Gesamt");
     contentLayout.setTableHeaders(tableHeaders);
+    List<Map<String, String>> tableRows = new ArrayList<>();
+    Map<String,String> row1 = new LinkedHashMap<>();
+    row1.put("Position", "1");
+    row1.put("Beschreibung", "Elektrotechnik Nachhilfe");
+    row1.put("Preis", "25");
+    row1.put("Menge", "1");
+    row1.put("Gesamt", "25 EUR");
+    tableRows.add(row1);
+    Map<String,String> row2 = new LinkedHashMap<>();
+    row2.put("Position", "2");
+    row2.put("Beschreibung", "IHK-Projekt Unterstützung");
+    row2.put("Preis", "20");
+    row2.put("Menge", "1");
+    row2.put("Gesamt", "20 EUR");
+    tableRows.add(row2);
+    Map<String,String> row3 = new LinkedHashMap<>();
+    row3.put("Position", "3");
+    row3.put("Beschreibung", "Nachhilfe Programmieren");
+    row3.put("Preis", "35");
+    row3.put("Menge", "1");
+    row3.put("Gesamt", "35 EUR");
+    tableRows.add(row3);
+    Map<String,String> row4 = new LinkedHashMap<>();
+    row4.put("Position", "4");
+    row4.put("Beschreibung", "IT Nachhilfe");
+    row4.put("Preis", "20");
+    row4.put("Menge", "1");
+    row4.put("Gesamt", "20 EUR");
+    tableRows.add(row4);
+    Map<String,String> row5 = new LinkedHashMap<>();
+    row5.put("Position", "5");
+    row5.put("Beschreibung", "IT-Ausbildung Nachhilfe");
+    row5.put("Preis", "12");
+    row5.put("Menge", "1");
+    row5.put("Gesamt", "12 EUR");
+    tableRows.add(row5);
+    Map<String,String> row6 = new LinkedHashMap<>();
+    row6.put("Position", "6");
+    row6.put("Beschreibung", "IT-Ausbildung Nachhilfe");
+    row6.put("Preis", "12");
+    row6.put("Menge", "1");
+    row6.put("Gesamt", "12 EUR");
+    tableRows.add(row6);
+    contentLayout.setTableRows(tableRows);
 
     int pageWidth = (int) firstPage.getTrimBox().getWidth();
     int pageHeight = (int) firstPage.getTrimBox().getHeight();
@@ -87,14 +134,14 @@ public class ComplexInvoice {
 
     PDImageXObject headImage = PDImageXObject.createFromFile(
         contentLayout.getLogo().getPath(), document);
-    contentStream.drawImage(headImage, 0, pageHeight - 235, pageWidth, 239);
+    contentStream.drawImage(headImage, 3, pageHeight - 201, 181, 201);
 
     String[] contactDetails = new String[]{contentLayout.getContactCompany(), contentLayout.getContactName(), contentLayout.getContactStreetHouseNo(),contentLayout.getContactZipAndLocation(), contentLayout.getContactEmail(), contentLayout.getContactMobile()};
     myTextClass.addMultiLineText(contactDetails, 18,
         pageWidth - (int) (font.getStringWidth(Arrays.stream(contactDetails).
             max(Comparator.comparingInt(String::length)).get())+ 2200) / 1000 * 15 - 10, pageHeight - 25, font,
         15, contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 150, font, contentLayout.getCapitalFontSize(), contentLayout.getFontColor());
+    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 39, font, contentLayout.getCapitalFontSize(), contentLayout.getFontColor());
 
     myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, contentLayout.getTextFontSize(),
         contentLayout.getFontColor());
@@ -128,41 +175,17 @@ public class ComplexInvoice {
       myTable.addCell(header, tableHeadColor);
     }
 
-    myTable.addCell("1", tableBodyColor);
-    myTable.addCell("Masala", tableBodyColor);
-    myTable.addCell("120", tableBodyColor);
-    myTable.addCell("2", tableBodyColor);
-    myTable.addCell("240", tableBodyColor);
-
-    myTable.addCell("2", tableBodyColor);
-    myTable.addCell("Masala", tableBodyColor);
-    myTable.addCell("120", tableBodyColor);
-    myTable.addCell("2", tableBodyColor);
-    myTable.addCell("240", tableBodyColor);
-
-    myTable.addCell("3", tableBodyColor);
-    myTable.addCell("Masala", tableBodyColor);
-    myTable.addCell("120", tableBodyColor);
-    myTable.addCell("2", tableBodyColor);
-    myTable.addCell("240", tableBodyColor);
-
-    myTable.addCell("4", tableBodyColor);
-    myTable.addCell("Masala", tableBodyColor);
-    myTable.addCell("120", tableBodyColor);
-    myTable.addCell("2", tableBodyColor);
-    myTable.addCell("240", tableBodyColor);
-
-    myTable.addCell("5", tableBodyColor);
-    myTable.addCell("Masala", tableBodyColor);
-    myTable.addCell("120", tableBodyColor);
-    myTable.addCell("2", tableBodyColor);
-    myTable.addCell("240", tableBodyColor);
+    for(Map<String, String> row : contentLayout.getTableRows()) {
+      for (Map.Entry<String, String> entry : row.entrySet()) {
+        myTable.addCell(entry.getValue(), tableBodyColor);
+      }
+    }
 
     myTable.addCell("", null);
     myTable.addCell("", null);
     myTable.addCell("Zwischen-Summe", null);
     myTable.addCell("", null);
-    myTable.addCell("880", null);
+    myTable.addCell("112", null);
 
     myTable.addCell("", null);
     myTable.addCell("", null);
@@ -174,9 +197,11 @@ public class ComplexInvoice {
     myTable.addCell("", null);
     myTable.addCell("", null);
     myTable.addCell("Summe", tableHeadColor);
-    myTable.addCell("924", tableHeadColor);
+    myTable.addCell("112", tableHeadColor);
 
-    myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 180, italicFont, contentLayout.getPaymentMethodFontSize(),
+    myTextClass.addMultiLineText(new String[]{"Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."}, 15, 25, 270, italicFont, contentLayout.getPaymentMethodFontSize(), contentLayout.getPaymentMethodColor());
+
+    myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 250, italicFont, contentLayout.getPaymentMethodFontSize(),
         contentLayout.getPaymentMethodColor());
 
     contentStream.setStrokingColor(contentLayout.getAuthoSignColor());
