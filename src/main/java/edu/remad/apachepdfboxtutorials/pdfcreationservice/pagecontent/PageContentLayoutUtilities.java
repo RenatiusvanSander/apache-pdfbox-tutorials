@@ -1,6 +1,8 @@
-package edu.remad.apachepdfboxtutorials.pdfcreationservice;
+package edu.remad.apachepdfboxtutorials.pdfcreationservice.pagecontent;
 
-public class PageLayoutUtilities {
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.ContentLayoutData;
+
+public class PageContentLayoutUtilities {
 
   /**
    * points constant
@@ -14,7 +16,7 @@ public class PageLayoutUtilities {
   /**
    * private PageLayoutUtilities Constructor for static access
    */
-  private PageLayoutUtilities() {
+  private PageContentLayoutUtilities() {
   }
 
   /**
@@ -35,5 +37,9 @@ public class PageLayoutUtilities {
    */
   public static float convertMmToPoint(final float mm) {
     return mm * POINTS_CONSTANT;
+  }
+
+  public static String[] createCompanyContactDetails ( ContentLayoutData pageContentLayout) {
+    return new String[]{pageContentLayout.getContactCompany(), pageContentLayout.getContactName(), pageContentLayout.getContactStreetHouseNo(),pageContentLayout.getContactZipAndLocation(), pageContentLayout.getContactEmail(), pageContentLayout.getContactMobile()};
   }
 }

@@ -4,9 +4,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.pagecontent.SinglePageContentLayouter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 
 /**
  * A pdf creator written with a builder pattern
@@ -105,8 +108,10 @@ public class PDFCreationBuilder {
       contentLayoutData.setStreetHouseNumber("Musterstraße", "48d");
       contentLayoutData.setLocationZipCode("85354", "Musterstadt");
 
-      PageContentLayouter contentLayouter = new PageContentLayouter(pdfDocument, pdfPages.get(0),
-          contentLayoutData);
+      // foor loop for several pages
+      PDPageContentStream pageContentStream = new PDPageContentStream(pdfDocument, pdfPages.get(0));
+      SinglePageContentLayouter contentLayouter = new SinglePageContentLayouter(pdfDocument, pdfPages.get(0),
+          contentLayoutData, pageContentStream);
     }
 
     this.pdfDocument.setDocumentInformation(this.documentInformation);

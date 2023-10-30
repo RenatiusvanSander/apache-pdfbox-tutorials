@@ -3,10 +3,14 @@ package edu.remad.apachepdfboxtutorials.pdfcreationservice;
 import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 
 /**
@@ -132,6 +136,27 @@ public class ContentLayoutData {
   private Color paymentMethodColor;
 
   private List<Map<String, String>> tableRows;
+  private int pageWidth;
+
+  private int pageHeight;
+  private String[] valueAddedTaxDisclaimerText;
+
+  public String getInvoiceNoLabel() {
+    return invoiceNoLabel;
+  }
+
+  public String getInvoiceDateLabel() {
+    return invoiceDateLabel;
+  }
+
+  public String getInvoicePerformanceDateLabel() {
+    return invoicePerformanceDateLabel;
+  }
+
+  private String invoiceNoLabel;
+
+  private String invoiceDateLabel;
+  private String invoicePerformanceDateLabel;
 
   /**
    * Sets full name
@@ -566,5 +591,39 @@ public class ContentLayoutData {
 
   public List<Map<String, String>> getTableRows() {
     return tableRows;
+  }
+
+    public void setPageWidth(int pageWidth) { this.pageWidth = pageWidth; }
+
+  public int getPageWidth() {
+    return pageWidth;
+  }
+
+  public void setPageHeight(int pageHeight) {
+    this.pageHeight = pageHeight;
+  }
+
+  public int getPageHeight() {
+    return this.pageHeight;
+  }
+
+    public void setInvoiceNoLabel(String invoiceNoLabel) {
+    this.invoiceNoLabel = invoiceNoLabel;
+    }
+
+  public void setInvoiceDateLabel(String invoiceDateLabel) {
+    this.invoiceDateLabel = invoiceDateLabel;
+  }
+
+  public void setInvoicePerformanceDateLabel(String invoicePerformanceDateLabel) {
+    this.invoicePerformanceDateLabel = invoicePerformanceDateLabel;
+  }
+
+  public void setValueAddedTaxDisclaimerText(String[] valueAddedTaxDisclaimerText) {
+    this.valueAddedTaxDisclaimerText = valueAddedTaxDisclaimerText;
+  }
+
+  public String[] getValueAddedTaxDisclaimerText() {
+    return this.valueAddedTaxDisclaimerText;
   }
 }

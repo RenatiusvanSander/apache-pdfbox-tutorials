@@ -5,21 +5,21 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.PDFCreationBuilder;
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.pagecontent.PDFPageContentTextLayouter;
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.pagecontent.SinglePageContentLayouter;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
-import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 
 /**
  * Concerning complex invoice to be created as PDF.
@@ -33,6 +33,8 @@ public class ComplexInvoice {
    * @throws IOException In case of creation of PDF fails.
    */
   public static void main(String[] args) throws IOException {
+    PDFCreationBuilder pdfBuilder = new PDFCreationBuilder();
+
     PDDocument document = new PDDocument();
     PDPage firstPage = new PDPage(PDRectangle.A4);
     document.addPage(firstPage);
@@ -121,50 +123,25 @@ public class ComplexInvoice {
     row6.put("Gesamt", "12 EUR");
     tableRows.add(row6);
     contentLayout.setTableRows(tableRows);
+    contentLayout.setPageWidth((int) firstPage.getTrimBox().getWidth());
+    contentLayout.setPageHeight((int) firstPage.getTrimBox().getHeight());
+    contentLayout.setInvoiceNoLabel("Rechnungsnummer");
+    contentLayout.setInvoiceDateLabel("Rechnungsdatum");
+    contentLayout.setInvoicePerformanceDateLabel("Leistungsdatum");
+    contentLayout.setValueAddedTaxDisclaimerText(new String[]{"Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."});
 
-    int pageWidth = (int) firstPage.getTrimBox().getWidth();
-    int pageHeight = (int) firstPage.getTrimBox().getHeight();
+    int pageWidth = contentLayout.getPageWidth();
+    int pageHeight = contentLayout.getPageHeight();
 
     PDPageContentStream contentStream = new PDPageContentStream(document, firstPage);
-
-    MyTextClass myTextClass = new MyTextClass(document, contentStream);
+    PDFPageContentTextLayouter myTextClass = new PDFPageContentTextLayouter(document, contentStream);
+    SinglePageContentLayouter pageContenLayouter = new SinglePageContentLayouter(document, firstPage, contentLayout, contentStream);
 
     PDFont font = contentLayout.getFont();
     PDFont italicFont = contentLayout.getItalicFont();
 
-    PDImageXObject headImage = PDImageXObject.createFromFile(
-        contentLayout.getLogo().getPath(), document);
-    contentStream.drawImage(headImage, 3, pageHeight - 201, 181, 201);
-
-    String[] contactDetails = new String[]{contentLayout.getContactCompany(), contentLayout.getContactName(), contentLayout.getContactStreetHouseNo(),contentLayout.getContactZipAndLocation(), contentLayout.getContactEmail(), contentLayout.getContactMobile()};
-    myTextClass.addMultiLineText(contactDetails, 18,
-        pageWidth - (int) (font.getStringWidth(Arrays.stream(contactDetails).
-            max(Comparator.comparingInt(String::length)).get())+ 2200) / 1000 * 15 - 10, pageHeight - 25, font,
-        15, contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getContactCompany(), 25, pageHeight - 39, font, contentLayout.getCapitalFontSize(), contentLayout.getFontColor());
-
-    myTextClass.addSingleLineText(contentLayout.getCustomerName(), 25, pageHeight - 250, font, contentLayout.getTextFontSize(),
-        contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getStreetHouseNumber(), 25, pageHeight - 274, font, contentLayout.getTextFontSize(),
-        contentLayout.getFontColor());
-    myTextClass.addSingleLineText(contentLayout.getLocationZipCode(), 25, pageHeight - 294, font, contentLayout.getTextFontSize(),
-        contentLayout.getFontColor());
-
-    float textWidth = myTextClass.getTextWidth(contentLayout.getInvoiceNo(), font, contentLayout.getTextFontSize());
-    myTextClass.addSingleLineText(contentLayout.getInvoiceNo(), (int) (pageWidth - 25 - textWidth), pageHeight - 250,
-        font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
-
-    String date = LocalDate.parse(contentLayout.getInvoiceCreationDate(), contentLayout.getDateFormatter()).format(contentLayout.getDateFormatter());
-    float dateTextWidth = myTextClass.getTextWidth("Rechnungsdatum: " + date, font,
-        contentLayout.getTextFontSize());
-    myTextClass.addSingleLineText("Rechnungsdatum: " + date,
-        (int) (pageWidth - 25 - dateTextWidth), pageHeight - 274, font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
-    String tutoringDate = LocalDate.parse(contentLayout.getTutoringAppointmentDate(), contentLayout.getDateFormatter()).format(contentLayout.getDateFormatter());
-    float tutoringDateWidth = myTextClass.getTextWidth("Leistungsdatum: " + tutoringDate, font, contentLayout.getTextFontSize());
-    myTextClass.addSingleLineText("Leistungsdatum: " + tutoringDate, (int) (pageWidth - 25 - tutoringDateWidth),
-        pageHeight - 298, font, contentLayout.getTextFontSize(), contentLayout.getFontColor());
-
-    Color tableHeadColor = contentLayout.getTableHeaderColor();
+    // int pageHeight = contentLayout.getPageHeight();
+    /*Color tableHeadColor = contentLayout.getTableHeaderColor();
     Color tableBodyColor = contentLayout.getTableBodyColor();
     MyTableClass myTable = new MyTableClass(document, contentStream);
     myTable.setTable(contentLayout.getTableCellWidths(), contentLayout.getTableCellHeight(), 25, pageHeight - 350);
@@ -197,36 +174,36 @@ public class ComplexInvoice {
     myTable.addCell("", null);
     myTable.addCell("", null);
     myTable.addCell("Summe", tableHeadColor);
-    myTable.addCell("112", tableHeadColor);
+    myTable.addCell("112", tableHeadColor);*/
 
-    myTextClass.addMultiLineText(new String[]{"Gemäß § 19 UStG wird keine Umsatzsteuer berechnet."}, 15, 25, 270, italicFont, contentLayout.getPaymentMethodFontSize(), contentLayout.getPaymentMethodColor());
+    // myTextClass.addMultiLineText(contentLayout.getValueAddedTaxDisclaimerText(), 15, 25, 270, italicFont, contentLayout.getPaymentMethodFontSize(), contentLayout.getPaymentMethodColor());
+    /* myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 250, italicFont, contentLayout.getPaymentMethodFontSize(),
+        contentLayout.getPaymentMethodColor()); */
 
-    myTextClass.addMultiLineText(contentLayout.getPaymentMethods().toArray(String[]::new), 15, 25, 250, italicFont, contentLayout.getPaymentMethodFontSize(),
-        contentLayout.getPaymentMethodColor());
-
-    contentStream.setStrokingColor(contentLayout.getAuthoSignColor());
+    /*contentStream.setStrokingColor(contentLayout.getAuthoSignColor());
     contentStream.setLineWidth(2);
     contentStream.moveTo(pageWidth - 250, 150);
     contentStream.lineTo(pageWidth - 25, 150);
-    contentStream.stroke();
+    contentStream.stroke();*/
 
-    String authoSign = contentLayout.getAuthoSign();
+    /*String authoSign = contentLayout.getAuthoSign();
     float authoSignWidth = myTextClass.getTextWidth(authoSign, italicFont, contentLayout.getTextFontSize());
     int xpos = pageWidth - 250 + pageWidth - 25;
     myTextClass.addSingleLineText(authoSign, (int) (xpos - authoSignWidth) / 2, 125, italicFont, contentLayout.getTextFontSize(),
-        contentLayout.getFontColor());
+        contentLayout.getFontColor());*/
 
+    /*
     String bottomLine = contentLayout.getBottomLine();
     float bottomLineWidth = myTextClass.getTextWidth(bottomLine, font, contentLayout.getBottomLineWidth());
     myTextClass.addSingleLineText(bottomLine, (int) (pageWidth - bottomLineWidth) / 2, 50,
-        italicFont, contentLayout.getBottomLineFontSize(), contentLayout.getBottomLineFontColor());
+        italicFont, contentLayout.getBottomLineFontSize(), contentLayout.getBottomLineFontColor()); */
 
-    contentStream.setNonStrokingColor(contentLayout.getBottomRectColor());
+    /*contentStream.setNonStrokingColor(contentLayout.getBottomRectColor());
     contentStream.addRect((float) contentLayout.getBottomRect().getX(), (float) contentLayout.getBottomRect().getY(), pageWidth, (float) contentLayout.getBottomRect().getHeight());
-    contentStream.fill();
+    contentStream.fill();*/
 
     contentStream.close();
-    document.save("/home/rmeier/invoice_generated.pdf");
+    document.save("C:\\Users\\Remy Meier\\apache-pdfbox-tutorials\\invoice_generated.pdf");
     document.close();
     System.out.println("Document created.");
   }

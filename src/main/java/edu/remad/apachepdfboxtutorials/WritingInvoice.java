@@ -1,7 +1,7 @@
 package edu.remad.apachepdfboxtutorials;
 
 import edu.remad.apachepdfboxtutorials.pdfcreationservice.ContentLayoutData;
-import edu.remad.apachepdfboxtutorials.pdfcreationservice.PageLayoutUtilities;
+import edu.remad.apachepdfboxtutorials.pdfcreationservice.pagecontent.PageContentLayoutUtilities;
 import java.io.IOException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -21,11 +21,11 @@ public class WritingInvoice {
   /**
    * height of 45 mm offset to have place for header
    */
-  private static final float OFFSET_HEADER = PageLayoutUtilities.convertMmToPoint(250.4f);
+  private static final float OFFSET_HEADER = PageContentLayoutUtilities.convertMmToPoint(250.4f);
   /**
    * left offset 25mm of page
    */
-  private static final float OFFSET_LEFT = PageLayoutUtilities.convertMmToPoint(25f);
+  private static final float OFFSET_LEFT = PageContentLayoutUtilities.convertMmToPoint(25f);
 
   /**
    * Runs write one single line text into PDF
@@ -61,8 +61,8 @@ public class WritingInvoice {
     contentStream.beginText();
     contentStream.setFont(PDType1Font.HELVETICA, CONTACT_FONT_SIZE);
     float height = page.getMediaBox().getUpperRightY();
-    contentStream.newLineAtOffset(PageLayoutUtilities.convertMmToPoint(128.016f),
-        height - PageLayoutUtilities.convertMmToPoint(51.562f));
+    contentStream.newLineAtOffset(PageContentLayoutUtilities.convertMmToPoint(128.016f),
+        height - PageContentLayoutUtilities.convertMmToPoint(51.562f));
     contentStream.showText(contentLayoutData.getContactName());
     contentStream.newLineAtOffset(0f, -CONTACT_FONT_SIZE);
     contentStream.showText(contentLayoutData.getContactCompany());
